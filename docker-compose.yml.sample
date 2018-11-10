@@ -1,0 +1,25 @@
+version: '3'
+services:
+  shadowsocks2:
+    image: go-shadowsocks2:latest
+    build:
+       context: ./build
+       args:
+         ALPINE_GLIBC_PACKAGE_VERSION: 2.28-r0
+         GO_SOURCE_URL: https://dl.google.com/go/go1.11.2.linux-amd64.tar.gz
+         SHADOWSOCKS_SOURCE_URL: github.com/shadowsocks/go-shadowsocks2
+         USERNAME: shadowsocks
+         GROUPNAME: shadowsocks
+         UID: 1001
+         GID: 1001
+    restart: always
+    user: 1001:1001
+    network_mode: host
+    cap_drop:
+      - SYS_ADMIN
+      - NET_ADMIN
+    environment:
+      SS_PORT_1: 1001
+      SS_PORT_1_PW: password1
+      SS_PORT_2: 1002
+      SS_PORT_2_PW: password2
